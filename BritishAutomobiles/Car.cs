@@ -13,5 +13,14 @@ namespace BritishAutomobiles
         public double EngineSize { get; set; }
         public string FuelType { get; set; }
         public string ValveTrainConfig { get; set; }
+
+        public Car(string manufacture, string model, double engineSize, string fuelType, string valveTrainConfig)
+        {
+            Manufacture = manufacture;
+            Model = model;
+            EngineSize = engineSize;
+            FuelType = fuelType;
+            ValveTrainConfig = valveTrainConfig;
+        }
     }
 }
