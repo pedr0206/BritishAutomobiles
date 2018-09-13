@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BritishAutomobiles
 {
@@ -21,6 +17,11 @@ namespace BritishAutomobiles
             EngineSize = engineSize;
             FuelType = fuelType;
             ValveTrainConfig = valveTrainConfig;
+        }
+
+        internal void Print(Segment.SegmentEnum segment)
+        {
+            Console.WriteLine(Manufacture + " " + Model + " " + EngineSize.ToString() + " " + FuelType + " " + ValveTrainConfig + " " + segment.ToString() + "\n ");
         }
     }
 }

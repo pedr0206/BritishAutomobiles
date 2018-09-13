@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using static BritishAutomobiles.Segment;
 
 namespace BritishAutomobiles
@@ -36,6 +33,13 @@ namespace BritishAutomobiles
             var fuelType = entries[3];
             var valvTrainConfig = entries[4];
             carList.Add(new Car(manufacture, model, engineSize, fuelType, valvTrainConfig));
+        }
+        public void PrintCars()
+        {
+            foreach (var car in carList)
+            {
+                car.Print(Segment);
+            }
         }
     }
 }
