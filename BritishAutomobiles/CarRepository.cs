@@ -1,4 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using static BritishAutomobiles.Segment;
@@ -9,36 +12,48 @@ namespace BritishAutomobiles
     {
         public SegmentEnum Segment { get; set; }
 
-        public List<Car> carList { get; set; }
+        public List<Car> CarList { get; set; }
         public CarRepository(string filePath, SegmentEnum segment)
         {
             Segment = segment;
-            carList = new List<Car>();
+            CarList = new List<Car>();
 
             List<string> lines = File.ReadAllLines(filePath).ToList();
-            foreach (var line in lines)
-            {
-                string[] entry = line.Split('-');
-                if (entry[5] == segment.ToString())
-                {
-                    AddCar(entry);
-                }
-            }
+            var json = string.Join("", lines);
+            AddCars(json);
         }
-        public void AddCar(string[] entries)
+        private void AddCars(string json)
         {
-            var manufacture = entries[0];
-            var model = entries[1];
-            var engineSize = double.Parse(entries[2]);
-            var fuelType = entries[3];
-            var valvTrainConfig = entries[4];
-            carList.Add(new Car(manufacture, model, engineSize, fuelType, valvTrainConfig));
+
+            var jObject = JObject.Parse(json);
+            var cars = jObject["cars"];
+            foreach (var car in cars)
+            {
+                if (car["manufacturer"] == null)
+                    throw new Exception("value is not present at MANUFACTURE field");
+                else if (car["model"] == null)
+                    throw new Exception("value is not present at MODEL field");
+                else if (car["engine-size"] == null)
+                    throw new Exception("value is not present at ENGINE SIZE field");
+                else if (car["fuel-type"] == null)
+                    throw new Exception("value is not present at FUEL TYPE field");
+                else if (car["valve-train"] == null)
+                    throw new Exception("value is not present at VALVE TRAIN field");
+
+                if (Segment.ToString() == car["segment"].Value<string>())
+                    CarList.Add(new Car(
+                        car["manufacturer"].Value<string>(),
+                        car["model"].Value<string>(),
+                        car["engine-size"].Value<double>(),
+                        car["fuel-type"].Value<string>(),
+                        car["valve-train"].Value<string>()));
+            }
         }
         public void PrintCars()
         {
-            foreach (var car in carList)
+            foreach (var car in CarList)
             {
-                car.Print(Segment);
+                car.Print();
             }
         }
     }

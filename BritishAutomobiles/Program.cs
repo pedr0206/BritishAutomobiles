@@ -18,6 +18,10 @@ namespace BritishAutomobiles
             CarRepository MultiPurposeCarsSegment = new CarRepository(filePath, SegmentEnum.SegmentM);
             CarRepository SportsCarsSegment = new CarRepository(filePath, SegmentEnum.SegmentS);
 
+            //var car1 = new Car("test", "test",1.0, "test", "test");
+            //car1.SetEnginesize(2.0);
+            //Console.WriteLine(car1.ToString() + " " + SportsCarsSegment.Segment.ToString());
+
             MiniCarsSegment.PrintCars();
             SmallCarsSegment.PrintCars();
             MediumCarsSegment.PrintCars();
