@@ -39,7 +39,6 @@ namespace BritishAutomobiles
                     throw new Exception("value is not present at FUEL TYPE field");
                 else if (car["valve-train"] == null)
                     throw new Exception("value is not present at VALVE TRAIN field");
-
                 if (Segment.ToString() == car["segment"].Value<string>())
                     CarList.Add(new Car(
                         car["manufacturer"].Value<string>(),
